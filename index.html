@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+		<div id="wrapper">
+			<div id="bg"></div>
+			<div id="overlay"></div>
+			<div id="main">
+
+				<!-- Header -->
+					<header id="header">
+						<h1>DikNus</h1>
+						<p>bot for &nbsp;&bull;&nbsp; merchandiser &nbsp;&bull;&nbsp; employee</p>
+						<nav>
+							<ul>
+                                <li> <a data-city="1" class="city icon"><span class="label">Город 1</span></a></li>
+                                <li> <a data-city="2" class="city icon"><span class="icon-text"  class="label">Город 2</span></a></li>
+                                <li> <a data-city="3" class="city icon"><span class="icon-text"  class="label">Город 3</span></a></li>
+							</ul>
+						</nav>
+					</header>
+
+				<!-- Footer -->
+					<footer id="footer">
+						<span class="copyright">&copy; @mahamerz - telegram разработчика</a>.</span>
+					</footer>
+
+			</div>
+		</div>
+		<script>
+			window.onload = function() { document.body.classList.remove('is-preload'); }
+			window.ontouchmove = function() { return false; }
+			window.onorientationchange = function() { document.body.scrollTop = 0; }
+		</script>
+	</body>
+</html>
