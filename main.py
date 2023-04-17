@@ -1,7 +1,14 @@
+import os
+from dotenv import load_dotenv
+
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.types.web_app_info import WebAppInfo
 
-bot = Bot('6256219480:AAHyT62NNppMEcbgf1HO4-VBVaxC2tDLl4g')
+load_dotenv()
+
+token= os.getenv("TELEGRAM_BOT_TOKEN")
+
+bot = Bot(token)
 dp = Dispatcher(bot)
 
 

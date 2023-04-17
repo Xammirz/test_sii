@@ -13,25 +13,27 @@
 			<div id="main">
 
 				<!-- Header -->
-					<header id="header">
-						<h1>DikNus</h1>
-						<p>bot for &nbsp;&bull;&nbsp; merchandiser &nbsp;&bull;&nbsp; employee</p>
-						<nav>
-							<ul>
-                                <li> <a data-city="1" class="city icon"><span class="label">Город 1</span></a></li>
-                                <li> <a data-city="2" class="city icon"><span class="icon-text"  class="label">Город 2</span></a></li>
-                                <li> <a data-city="3" class="city icon"><span class="icon-text"  class="label">Город 3</span></a></li>
-							</ul>
-						</nav>
-					</header>
-
+				<header id="header">
+					<h1>DikNus</h1>
+					<p>bot for &nbsp;&bull;&nbsp; merchandiser &nbsp;&bull;&nbsp; employee</p>
+					<nav>
+					  <ul id="city-selection"></ul>
+					  <!-- HTML-код для списка дилеров -->
+					  <div id="dealers-list-container">
+						<button id="back-to-cities">Back to cities</button>
+						${firstCityDealersHtml}
+					  </div>					  
+					</nav>
+				  </header>
+				  
 				<!-- Footer -->
 					<footer id="footer">
-						<span class="copyright">&copy; @mahamerz - telegram разработчика</a>.</span>
+						<span class="copyright">&copy; mahamerz - telegram разработчика</a>.</span>
 					</footer>
 
 			</div>
 		</div>
+		<script src="assets/js/script.js"></script>
 		<script>
 			window.onload = function() { document.body.classList.remove('is-preload'); }
 			window.ontouchmove = function() { return false; }

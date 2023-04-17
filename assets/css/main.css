@@ -1103,3 +1103,12 @@ input, select, textarea {
 			padding: 5px;
 			background-color: rgba(0, 0, 0, 0.5);
 		  }
+		  #back-to-cities {
+			padding: 0.5em 1em;
+			background-color: #333;
+			color: #fff;
+			border: none;
+			cursor: pointer;
+			border-radius: 0.3em;
+		  }
+		  
