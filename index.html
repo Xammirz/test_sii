@@ -4,6 +4,7 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 		<link rel="stylesheet" href="assets/css/main.css" />
+		<link rel="stylesheet" href="assets/css/dealer.css" />
 		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
 	</head>
 	<body class="is-preload">
@@ -18,11 +19,13 @@
 					<p>bot for &nbsp;&bull;&nbsp; merchandiser &nbsp;&bull;&nbsp; employee</p>
 					<nav>
 					  <ul id="city-selection"></ul>
-					  <!-- HTML-код для списка дилеров -->
-					  <div id="dealers-list-container">
+					<!-- HTML-код для списка дилеров -->
+					<div id="dealers-list-container">
 						<button id="back-to-cities">Back to cities</button>
+						<div class="dealers-row">
 						${firstCityDealersHtml}
-					  </div>					  
+						</div>
+					</div>
 					</nav>
 				  </header>
 				  

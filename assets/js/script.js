@@ -12,12 +12,15 @@ const citiesHtml = data.cities.map(city => `
 `).join('');
 
 // Формируем HTML-код для списка дилеров первого города
-const firstCityDealersHtml = data.dealers[data.cities[0].id].map(dealer => `
+const firstCityDealers = data.dealers[data.cities[0].id];
+const firstCityDealersHtml = firstCityDealers.map(dealer => `
   <div class="dealer">
     <h2>${dealer.name}</h2>
     <p>${dealer.address}</p>
   </div>
 `).join('');
+
+
 
 // Отображаем список городов на странице
 const citySelection = document.getElementById('city-selection');
@@ -31,12 +34,14 @@ cityIcons.forEach(icon => {
     const cityId = icon.getAttribute('data-city');
 
     // Формируем HTML-код для списка дилеров выбранного города
-    const dealersHtml = data.dealers[cityId].map(dealer => `
+    const cityDealers = data.dealers[cityId];
+    const dealersHtml = cityDealers.map(dealer => `
       <div class="dealer">
         <h2>${dealer.name}</h2>
         <p>${dealer.address}</p>
       </div>
     `).join('');
+
 
     // Вставляем HTML-код в нужное место на странице
     const dealersListContainer = document.getElementById('dealers-list-container');
