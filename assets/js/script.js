@@ -11,15 +11,14 @@ const citiesHtml = data.cities.map(city => `
   </li>
 `).join('');
 
-// Формируем HTML-код для списка дилеров первого города
-const firstCityDealers = data.dealers[data.cities[0].id];
-const firstCityDealersHtml = firstCityDealers.map(dealer => `
-  <div class="dealer">
-    <h2>${dealer.name}</h2>
-    <p>${dealer.address}</p>
-  </div>
-`).join('');
-
+const firstCityDealersHtml = data.dealers[data.cities[0].id].reduce((acc, dealer) => {
+  return `${acc}
+    <div class="dealer">
+      <h2>${dealer.name}</h2>
+      <p>${dealer.address}</p>
+    </div>
+  `;
+}, '');
 
 
 // Отображаем список городов на странице
@@ -71,6 +70,48 @@ cityIcons.forEach(icon => {
 citySelection.style.display = 'block';
 const dealersListContainer = document.getElementById('dealers-list-container');
 dealersListContainer.style.display = 'none';
+// Добавляем обработчик клика на каждого дилера в выбранном городе
+const dealerIcons = document.querySelectorAll('.dealer-icon');
+dealerIcons.forEach(icon => {
+  icon.addEventListener('click', () => {
+    // Получаем идентификаторы города и дилера
+    const cityId = icon.getAttribute('data-city');
+    const dealerId = icon.getAttribute('data-dealer');
 
+    // Получаем информацию о дилере из данных JSON-файла
+    const dealerInfo = data.dealers[cityId].find(dealer => dealer.id === dealerId);
+
+    // Формируем HTML-код для чеклиста выбранного дилера
+    const checklistHtml = dealerInfo.checklist.map(item => `
+      <li>${item}</li>
+    `).join('');
+
+    // Вставляем HTML-код в нужное место на странице
+    const dealerChecklistContainer = document.getElementById('dealer-checklist-container');
+    dealerChecklistContainer.innerHTML = `
+      <h2>${dealerInfo.name}</h2>
+      <p>${dealerInfo.address}</p>
+      <ul>
+        ${checklistHtml}
+      </ul>
+      <button id="back-to-dealers">Back to dealers</button>
+    `;
+
+    // Скрываем список дилеров
+    dealersListContainer.style.display = 'none';
+
+    // Показываем чеклист выбранного дилера
+    dealerChecklistContainer.style.display = 'block';
+
+    // Добавляем обработчик клика на кнопку "назад"
+    const backToDealersBtn = document.getElementById('back-to-dealers');
+    backToDealersBtn.addEventListener('click', () => {
+      // Отображаем список дилеров
+      dealersListContainer.style.display = 'block';
+      // Скрываем чеклист выбранного дилера
+      dealerChecklistContainer.style.display = 'none';
+    });
+  });
+});
   })
   .catch(error => console.error(error));
