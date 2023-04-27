@@ -1,11 +1,24 @@
+#footer {
+  position: fixed;
+}
+
+#main {
+  overflow-y: scroll;
+}
+
 #dealers-list-container {
-  display: flex;
-  flex-wrap: wrap;
+  width: 100%;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 }
+
 .dealer {
-  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  /* align-items: center; */
+
   width: calc(25% - 20px);
   max-width: 200px;
   height: 150px;

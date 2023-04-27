@@ -38,6 +38,7 @@ cityIcons.forEach(icon => {
       <div class="dealer">
         <h2>${dealer.name}</h2>
         <p>${dealer.address}</p>
+        <p><button>Чек-Лист</button></p>
       </div>
     `).join('');
 
@@ -53,7 +54,7 @@ cityIcons.forEach(icon => {
     citySelection.style.display = 'none';
 
     // Показываем список дилеров
-    dealersListContainer.style.display = 'block';
+    dealersListContainer.style.display = 'flex'; // delete
 
     // Добавляем обработчик клика на кнопку "назад"
     const backToCitiesBtn = document.getElementById('back-to-cities');
@@ -67,11 +68,12 @@ cityIcons.forEach(icon => {
 });
 
 // При загрузке страницы отображаем список городов
-citySelection.style.display = 'block';
+// citySelection.style.display = 'block';
 const dealersListContainer = document.getElementById('dealers-list-container');
 dealersListContainer.style.display = 'none';
+
 // Добавляем обработчик клика на каждого дилера в выбранном городе
-const dealerIcons = document.querySelectorAll('.dealer-icon');
+const dealerIcons = document.querySelectorAll('#dealer');
 dealerIcons.forEach(icon => {
   icon.addEventListener('click', () => {
     // Получаем идентификаторы города и дилера
