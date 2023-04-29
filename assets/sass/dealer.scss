@@ -111,6 +111,9 @@
 		height: initial !important;
 		border-radius: 12px;
 		font-weight: 500;
+		input{
+			appearance: auto !important;
+		}
 	}
 	#back-to-dealers {
 		@extend #back-to-cities;

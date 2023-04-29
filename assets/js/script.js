@@ -73,8 +73,8 @@ function renderChecklist(){
 		console.log(currentDealer);
 	
 		// Формируем HTML-код для чеклиста выбранного дилера
-		const checklistHtml = currentDealer.checklist.map(item => `
-		  <li>${item}</li>
+		const checklistHtml = currentDealer.checklist.map((item , id) => `
+		<li><input type="checkbox" id="${id}"><label for="${id}">${item}</label></li>
 		`).join('');
 		// Вставляем HTML-код в нужное место на странице
 		const dealerChecklistContainer = document.getElementById('dealer-checklist-container');

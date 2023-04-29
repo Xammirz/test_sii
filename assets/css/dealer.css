@@ -112,6 +112,11 @@
 #dealer-checklist-container li::before {
   display: none;
 }
+#dealer-checklist-container li input {
+  -webkit-appearance: auto !important;
+     -moz-appearance: auto !important;
+          appearance: auto !important;
+}
 #dealer-checklist-container #back-to-dealers {
   top: 10px !important;
 }
