@@ -145,7 +145,7 @@ a:hover {
   }
 }
 #wrapper {
-  animation: wrapper 1s forwards;
+  animation: wrapper 0s forwards;
   height: 100%;
   left: 0;
   opacity: 0;
@@ -191,7 +191,7 @@ a:hover {
   }
 }
 #overlay {
-  animation: overlay 1.5s -0.5s forwards;
+  animation: overlay 1.5s -1.5s forwards;
   background-attachment: fixed, fixed;
   background-image: url("images/overlay-pattern.png"), url("images/overlay.svg");
   background-position: top left, center center;
@@ -245,7 +245,7 @@ a:hover {
   }
 }
 #header {
-  animation: header 1s 0.25s forwards;
+  animation: header 1s -0.75s forwards;
   backface-visibility: hidden;
   transform: translate3d(0,0,0);
   cursor: default;
@@ -273,7 +273,7 @@ a:hover {
   margin: 0 auto;
 }
 #header nav li {
-  animation: nav-icons 0.5s ease-in-out forwards;
+  animation: nav-icons 0.6s ease-in-out forwards;
   backface-visibility: hidden;
   transform: translate3d(0,0,0);
   height: 5.35em;
@@ -283,34 +283,34 @@ a:hover {
   padding-top: 20px;
 }
 #header nav li:nth-child(1) {
-  animation-delay: 0.5s;
+  animation-delay: -0.5s;
 }
 #header nav li:nth-child(2) {
-  animation-delay: 0.75s;
+  animation-delay: -0.25s;
 }
 #header nav li:nth-child(3) {
-  animation-delay: 1s;
+  animation-delay: 0s;
 }
 #header nav li:nth-child(4) {
-  animation-delay: 1.25s;
+  animation-delay: 0.25s;
 }
 #header nav li:nth-child(5) {
-  animation-delay: 1.5s;
+  animation-delay: 0.5s;
 }
 #header nav li:nth-child(6) {
-  animation-delay: 1.75s;
+  animation-delay: 0.75s;
 }
 #header nav li:nth-child(7) {
-  animation-delay: 2s;
+  animation-delay: 1s;
 }
 #header nav li:nth-child(8) {
-  animation-delay: 2.25s;
+  animation-delay: 1.25s;
 }
 #header nav li:nth-child(9) {
-  animation-delay: 2.5s;
+  animation-delay: 1.5s;
 }
 #header nav li:nth-child(10) {
-  animation-delay: 2.75s;
+  animation-delay: 1.75s;
 }
 #header nav li::before {
   content: "";
