@@ -60,7 +60,7 @@ cityIcons.forEach(icon => {
     const backToCitiesBtn = document.getElementById('back-to-cities');
     backToCitiesBtn.addEventListener('click', () => {
       // Отображаем блок выбора города
-      citySelection.style.display = 'block';
+      citySelection.style.display = 'flex';
       // Скрываем список дилеров
       dealersListContainer.style.display = 'none';
     });
