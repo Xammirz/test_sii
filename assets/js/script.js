@@ -11,15 +11,6 @@ const citiesHtml = data.cities.map(city => `
   </li>
 `).join('');
 
-const firstCityDealersHtml = data.dealers[data.cities[0].id].reduce((acc, dealer) => {
-  return `${acc}
-    <div class="dealer">
-      <h2>${dealer.name}</h2>
-      <p>${dealer.address}</p>
-    </div>
-  `;
-}, '');
-
 
 // Отображаем список городов на странице
 const citySelection = document.getElementById('city-selection');
