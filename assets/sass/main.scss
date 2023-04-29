@@ -464,6 +464,10 @@
 							font-size: 1em;
 						}
 					}
+					ul{
+						flex-direction: column;
+						gap: 20px;
+					}
 				}
 			}
 
