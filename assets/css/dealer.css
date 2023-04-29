@@ -11,44 +11,34 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  position: relative;
 }
-
-.dealer {
+#dealers-list-container .dealers_container {
   display: flex;
-  justify-content: center;
   width: 100%;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding-top: 50px;
+  margin-bottom: 50px;
+}
+#dealers-list-container .dealer {
+  width: calc(25% - 10px);
   /* align-items: center; */
-  width: calc(25% - 20px);
-  max-width: 200px;
   height: 150px;
-  margin: 10px;
   background-color: #F5F5F5;
   border-radius: 10px;
   font-size: 1em;
   color: #333;
   text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
-
-.dealer::before {
-  content: "";
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  width: 80%;
-  height: 40px;
-  background-image: url("images/icon.svg");
-  background-repeat: no-repeat;
-  background-position: center;
-}
-
-.dealer h2 {
+#dealers-list-container .dealer h2 {
   margin: 0;
 }
-
-.dealer p {
+#dealers-list-container .dealer p {
   margin: 0;
-  position: absolute;
   bottom: 0;
   width: 100%;
   padding: 5px;
@@ -73,6 +63,18 @@
 .add-item-button {
   margin-top: 10px;
   padding: 5px 10px;
+  background-color: #007bff;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+#back-to-cities {
+  position: absolute;
+  left: 0;
+  top: 0;
+  padding: 10px 20px;
   background-color: #007bff;
   color: #ffffff;
   border: none;
