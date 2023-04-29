@@ -1,0 +1,78 @@
+#footer {
+	position: fixed;
+  }
+  
+  #main {
+	overflow-y: scroll;
+  }
+  
+  #dealers-list-container {
+	width: 100%;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+  }
+  
+  .dealer {
+	display: flex;
+	justify-content: center;
+	width: 100%;
+	/* align-items: center; */
+  
+	width: calc(25% - 20px);
+	max-width: 200px;
+	height: 150px;
+	margin: 10px;
+	background-color: #F5F5F5;
+	border-radius: 10px;
+	font-size: 1em;
+	color: #333;
+	text-align: center;
+  }
+  .dealer::before {
+	content: '';
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: 80%;
+	height: 40px;
+	background-image: url('images/icon.svg');
+	background-repeat: no-repeat;
+	background-position: center;
+  }
+  .dealer h2 {
+	margin: 0;
+  }
+  .dealer p {
+	margin: 0;
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	padding: 5px;
+	background-color: rgba(0, 0, 0, 0.7);
+	color: #fff;
+  }
+  .dealer-checklist {
+	display: none;
+	position: absolute;
+	top: 0;
+	left: 0;
+	background-color: #ffffff;
+	border: 1px solid #cccccc;
+	padding: 10px;
+  }
+  
+  .dealer-checklist.show {
+	display: block;
+  }
+  
+  .add-item-button {
+	margin-top: 10px;
+	padding: 5px 10px;
+	background-color: #007bff;
+	color: #ffffff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+  }
