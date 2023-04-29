@@ -33,17 +33,44 @@
 		display: flex;
 		flex-direction: column;
 		justify-content: center;
+		position: relative;
 
 		h2 {
 			margin: 0;
+			display: none;
 		  }
 		  p {
 			margin: 0;
 			bottom: 0;
 			width: 100%;
 			padding: 5px;
-			background-color: rgba(0, 0, 0, 0.7);
-			color: #fff;
+			opacity: 1;
+			font-size: 18px;
+			font-weight: 600;
+		  }
+		  button{
+			margin-top: 10px;
+			padding: 10px 20px;
+			border: 1px solid #cccccc !important;
+			color: #007bff;
+			border: none;
+			border-radius: 12px;
+			font-size: 16px;
+			cursor: pointer;
+			background-color: transparent ;
+		  }
+		  &::before{
+			content: '';
+			position: absolute;
+			width: 70px;
+			height: 70px;
+			left: 10%;
+			top: 0;
+			top: 50%;
+			transform: translateY(-50%);
+			margin-bottom: 20px;
+			background-image: url("./images/icon.svg");
+			background-repeat: no-repeat;
 		  }
 	  }
 	
@@ -75,13 +102,15 @@
 
   #back-to-cities{
 	position: absolute;
-	left: 0;
+	left: 50%;
+	transform:translateX(-50%);
 	top: 0;
 	padding: 10px 20px;
-	background-color: #007bff;
+	background-color: #62b28a;
 	color: #ffffff;
-	border: none;
-	border-radius: 5px;
+	border: 1px solid #ffffff !important;
+	border: none; 
+	border-radius: 12px;
 	cursor: pointer;
   }
 
@@ -98,10 +127,34 @@
 	#dealers-list-container{
 		.dealer{ 
 			width: calc(32% - 10px);
+			&::before{
+				width: 50px;
+				height: 50px;
+				left:5%;
+			}
 		}
 	}
   }
-
+@media only screen and (min-width : 768px){
+	#dealers-list-container{
+	.dealer{
+		padding-right: 20px;
+		&::before{
+			width: 50px;
+			height: 50px;
+			left:5%;
+		}
+		p{
+			font-size: 16px;
+			margin-left: auto;
+			width: auto;
+		}
+		button{
+			padding: 5px 10px;
+		}
+	}
+}
+}
 
   @media only screen and (max-width:767px){
 	//tablet

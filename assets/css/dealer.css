@@ -121,6 +121,29 @@
   #dealers-list-container .dealer {
     width: calc(32% - 10px);
   }
+  #dealers-list-container .dealer::before {
+    width: 50px;
+    height: 50px;
+    left: 5%;
+  }
+}
+@media only screen and (min-width: 768px) {
+  #dealers-list-container .dealer {
+    padding-right: 20px;
+  }
+  #dealers-list-container .dealer::before {
+    width: 50px;
+    height: 50px;
+    left: 5%;
+  }
+  #dealers-list-container .dealer p {
+    font-size: 16px;
+    margin-left: auto;
+    width: auto;
+  }
+  #dealers-list-container .dealer button {
+    padding: 5px 10px;
+  }
 }
 @media only screen and (max-width: 767px) {
   #dealers-list-container .dealer {
