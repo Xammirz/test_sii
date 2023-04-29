@@ -45,10 +45,8 @@ cityIcons.forEach(icon => {
 
     // Вставляем HTML-код в нужное место на странице
     const dealersListContainer = document.getElementById('dealers-list-container');
-    dealersListContainer.innerHTML = `
-      <button id="back-to-cities">Back to cities</button>
-      ${dealersHtml}
-    `;
+	const dealersContainer = document.querySelector('.dealers_container');
+	dealersContainer.innerHTML = `${dealersHtml}`;
 
     // Скрываем блок выбора города
     citySelection.style.display = 'none';
