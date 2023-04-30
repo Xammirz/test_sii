@@ -159,6 +159,14 @@
 	cursor: pointer;
   }
 
+  .expired {
+	background-color: #ff0000 !important;
+	color: #ffffff !important;
+	button{
+		color:#ffffff !important;
+	}
+  }
+
 
   @media only screen and (min-width:1024px){
 	//desktop
