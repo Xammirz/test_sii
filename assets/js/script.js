@@ -28,7 +28,10 @@ cityIcons.forEach(icon => {
 
     // Формируем HTML-код для списка дилеров выбранного города
     const cityDealers = data.dealers[cityId];
-    const dealersHtml = cityDealers.map((dealer , id) => `
+
+	const sortedDealers = sortingDealers(cityDealers);
+
+    const dealersHtml = sortedDealers.map((dealer , id) => `
       <div class="dealer" data-id=${id} data-date=${dealer.last_modified}>
         <h2>${dealer.name}</h2>
         <p>${dealer.address}</p>
@@ -102,6 +105,7 @@ function renderChecklist(){
 	  });
 	});
 }
+
 function checkingDealers() {
   //ПРоверка даты дилеров
   const dealersEl = document.querySelectorAll('.dealer');
@@ -119,6 +123,21 @@ function checkingDealers() {
 		dealer.classList.add('expired')
 	}
   });
+}
+
+function sortingDealers(dealersArr) {
+  //Сортировка дилеров
+  const dealers = [...dealersArr];
+  dealers.sort((first, second) => {
+    const firstDate = new Date(
+      ...first.last_modified.split('-').reverse()
+    ).getTime();
+    const secondDate = new Date(
+      ...second.last_modified.split('-').reverse()
+    ).getTime();
+    return secondDate - firstDate;
+  });
+  return dealers;
 }
 // При загрузке страницы отображаем список городов
 // citySelection.style.display = 'block';
