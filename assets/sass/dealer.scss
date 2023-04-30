@@ -73,6 +73,13 @@
 			background-repeat: no-repeat;
 		  }
 	  }
+	  .expired {
+		background-color: #ffdbdb !important;
+		button{
+			color:#000000 !important;
+			border: 1px solid #000000 !important;
+		}
+	  }
 	
   }
 
@@ -159,13 +166,7 @@
 	cursor: pointer;
   }
 
-  .expired {
-	background-color: #ff0000 !important;
-	color: #ffffff !important;
-	button{
-		color:#ffffff !important;
-	}
-  }
+
 
 
   @media only screen and (min-width:1024px){

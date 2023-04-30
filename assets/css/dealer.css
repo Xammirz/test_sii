@@ -73,6 +73,13 @@
   background-image: url("./images/icon.svg");
   background-repeat: no-repeat;
 }
+#dealers-list-container .expired {
+  background-color: #ffdbdb !important;
+}
+#dealers-list-container .expired button {
+  color: #000000 !important;
+  border: 1px solid #000000 !important;
+}
 
 .dealer-checklist {
   display: none;
@@ -158,14 +165,6 @@
   border: none;
   border-radius: 12px;
   cursor: pointer;
-}
-
-.expired {
-  background-color: #ff0000 !important;
-  color: #ffffff !important;
-}
-.expired button {
-  color: #ffffff !important;
 }
 
 @media only screen and (min-width: 1024px) {
