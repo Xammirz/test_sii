@@ -135,7 +135,7 @@ function sortingDealers(dealersArr) {
     const secondDate = new Date(
       ...second.last_modified.split('-').reverse()
     ).getTime();
-    return secondDate - firstDate;
+    return  firstDate - secondDate;
   });
   return dealers;
 }
