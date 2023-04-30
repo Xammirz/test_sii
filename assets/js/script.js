@@ -12,7 +12,8 @@ const citiesHtml = data.cities.map(city => `
 `).join('');
 
 let selectedSity = null;
-console.log(data);
+let currentDealer = null;
+
 // Отображаем список городов на странице
 const citySelection = document.getElementById('city-selection');
 citySelection.innerHTML = citiesHtml;
@@ -28,7 +29,7 @@ cityIcons.forEach(icon => {
     // Формируем HTML-код для списка дилеров выбранного города
     const cityDealers = data.dealers[cityId];
     const dealersHtml = cityDealers.map((dealer , id) => `
-      <div class="dealer" data-id=${id}>
+      <div class="dealer" data-id=${id} data-date=${dealer.last_modified}>
         <h2>${dealer.name}</h2>
         <p>${dealer.address}</p>
         <p><button>Чек-Лист</button></p>
@@ -55,14 +56,13 @@ cityIcons.forEach(icon => {
       // Скрываем список дилеров
       dealersListContainer.style.display = 'none';
     });
-renderChecklist();
+		renderChecklist();
+		checkingDealers();
   });
 });
 
 function renderChecklist(){
-	console.log(data);
 	const dealerIcons = document.querySelectorAll('.dealer');
-	let currentDealer = null;
 	dealerIcons.forEach(icon => {
 		icon.addEventListener('click', () => {
 		// Получаем идентификаторы города и дилера
@@ -70,7 +70,6 @@ function renderChecklist(){
 
 		currentDealer = data.dealers[selectedSity];
 		currentDealer = currentDealer[dealerId]
-		console.log(currentDealer);
 	
 		// Формируем HTML-код для чеклиста выбранного дилера
 		const checklistHtml = currentDealer.checklist.map((item , id) => `
@@ -102,6 +101,24 @@ function renderChecklist(){
 		});
 	  });
 	});
+}
+function checkingDealers() {
+  //ПРоверка даты дилеров
+  const dealersEl = document.querySelectorAll('.dealer');
+  const currentDate = new Date();
+  const maxExpireDay = 6;
+  dealersEl.forEach((dealer) => {
+	//разница даты дилера от текуший даты
+    const dealerDate = new Date(...dealer.dataset.date.split('-').reverse());
+    const diffDate = Math.floor(
+      (currentDate.getTime() - dealerDate.getTime()) / (1000 * 3600 * 24) +
+        currentDate.getDate()
+    );
+	if(diffDate > maxExpireDay){
+		//добавим класс expired в зависимости от даты
+		dealer.classList.add('expired')
+	}
+  });
 }
 // При загрузке страницы отображаем список городов
 // citySelection.style.display = 'block';
