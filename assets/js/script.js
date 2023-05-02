@@ -114,9 +114,9 @@ function checkingDealers() {
   dealersEl.forEach((dealer) => {
 	//разница даты дилера от текуший даты
     const dealerDate = new Date(...dealer.dataset.date.split('-').reverse());
+	dealerDate.setMonth(dealerDate.getMonth() - 1);
     const diffDate = Math.floor(
-      (currentDate.getTime() - dealerDate.getTime()) / (1000 * 3600 * 24) +
-        currentDate.getDate()
+      (currentDate - dealerDate) / (1000 * 3600 * 24)
     );
 	if(diffDate > maxExpireDay){
 		//добавим класс expired в зависимости от даты
