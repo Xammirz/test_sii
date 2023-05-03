@@ -31,8 +31,8 @@ cityIcons.forEach(icon => {
 
 	const sortedDealers = sortingDealers(cityDealers);
 
-    const dealersHtml = sortedDealers.map((dealer , id) => `
-      <div class="dealer" data-id=${id} data-date=${dealer.last_modified}>
+    const dealersHtml = sortedDealers.map((dealer) => `
+      <div class="dealer" data-id=${dealer.id} data-date=${dealer.last_modified}>
         <h2>${dealer.name}</h2>
         <p>${dealer.address}</p>
         <p><button>Чек-Лист</button></p>
@@ -69,11 +69,10 @@ function renderChecklist(){
 	dealerIcons.forEach(icon => {
 		icon.addEventListener('click', () => {
 		// Получаем идентификаторы города и дилера
-		const dealerId = icon.getAttribute('data-id');
+		const dealerId = Number(icon.getAttribute('data-id'));
 
-		currentDealer = data.dealers[selectedSity];
-		currentDealer = currentDealer[dealerId]
-	
+		currentDealer = data.dealers[selectedSity].find(dealer=> dealer.id === dealerId);
+
 		// Формируем HTML-код для чеклиста выбранного дилера
 		const checklistHtml = currentDealer.checklist.map((item , id) => `
 		<li><input type="checkbox" id="${id}"><label for="${id}">${item}</label></li>
@@ -114,9 +113,9 @@ function checkingDealers() {
   dealersEl.forEach((dealer) => {
 	//разница даты дилера от текуший даты
     const dealerDate = new Date(...dealer.dataset.date.split('-').reverse());
+	dealerDate.setMonth(dealerDate.getMonth() - 1);
     const diffDate = Math.floor(
-      (currentDate.getTime() - dealerDate.getTime()) / (1000 * 3600 * 24) +
-        currentDate.getDate()
+      (currentDate - dealerDate) / (1000 * 3600 * 24)
     );
 	if(diffDate > maxExpireDay){
 		//добавим класс expired в зависимости от даты

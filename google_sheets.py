@@ -1,69 +1,38 @@
 import gspread
-import json
 from oauth2client.service_account import ServiceAccountCredentials
-from datetime import datetime, time, timedelta
+import json
 
-# настройки таблицы
-sheet_name = "Имя таблицы"
-worksheet_name = "Название листа"
-city_col = 1  # номер столбца с городами
-dealer_col = 2  # номер столбца с дилерами
-address_col = 3  # номер столбца с адресами
-
-# настройки авторизации
-creds = ServiceAccountCredentials.from_json_keyfile_name(
-    "data/data.json",
-    ["https://www.googleapis.com/auth/spreadsheets", "https://www.googleapis.com/auth/drive"],
-)
+# Настройки авторизации
+scope = ['https://spreadsheets.google.com/feeds', 'https://www.googleapis.com/auth/drive']
+creds = ServiceAccountCredentials.from_json_keyfile_name('ключ.json', scope)
 client = gspread.authorize(creds)
 
-# получаем таблицу и лист
-sheet = client.open(sheet_name)
-worksheet = sheet.worksheet(worksheet_name)
+# Открываем таблицу
+sheet = client.open('название таблицы').sheet1
 
-# получаем данные из таблицы
-cities = worksheet.col_values(city_col)
-dealers = worksheet.col_values(dealer_col)
-addresses = worksheet.col_values(address_col)
-
-# удаляем заголовки столбцов
-cities.pop(0)
-dealers.pop(0)
-addresses.pop(0)
-
-# создаем словарь для данных
+# Получаем данные из таблицы и преобразуем их в словарь
 data = {}
+for row in sheet.get_all_records():
+    city_name = row['name']
+    dealers = []
+    for dealer_name, dealer_address, dealer_checklist, dealer_last_modified in zip(row['dealers'], row['address'], row['checklist'], row['last_modified']):
+        dealer = {
+            'name': dealer_name,
+            'address': dealer_address,
+            'checklist': dealer_checklist,
+            'last_modified': dealer_last_modified
+        }
+        dealers.append(dealer)
+    data[city_name] = dealers
 
-# заполняем словарь данными из таблицы
-for i in range(len(cities)):
-    city = cities[i]
-    dealer = dealers[i]
-    address = addresses[i]
+# Сохраняем данные в файл json
+with open('data/daata.json', 'w') as f:
+    json.dump(data, f, ensure_ascii=False, indent=4)
 
-    if city not in data:
-        data[city] = []
+# Записываем chat_id в файл .env
+chat_id_col = sheet.col_values(sheet.find('chat_id').col)
+chat_id_values = chat_id_col[1:]  # Пропускаем заголовок столбца
 
-    data[city].append({"dealer": dealer, "address": address})
-
-# сохраняем данные в JSON файл
-filename = "data.json"
-with open(filename, "w") as f:
-    json.dump(data, f, indent=4)
-
-# расписание обновления данных
-update_time = time(hour=0, minute=0)  # время обновления: 12 ночи МСК
-current_time = datetime.utcnow().time()
-
-if current_time < update_time:
-    # обновляем данные в запланированное время
-    update_delta = datetime.combine(datetime.utcnow().date(), update_time) - datetime.utcnow()
-    update_seconds = update_delta.total_seconds()
-    print(f"Next update in {update_seconds / 60:.1f} minutes")
-    time.sleep(update_seconds)
-else:
-    # обновляем данные сразу, если уже прошло запланированное время
-    print("Updating data now...")
-
-# обновляем данные и сохраняем в JSON файл
-# повторяем код, начиная с строки `# получаем таблицу и лист`
-# и заканчивая строкой `json.dump(data, f, indent=4)`
+with open('.env', 'w') as f:
+    for i, chat_id in enumerate(chat_id_values):
+        f.write(f'chat_id_{i+1}={chat_id}\n')

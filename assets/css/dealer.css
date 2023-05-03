@@ -124,9 +124,17 @@
      -moz-appearance: auto !important;
           appearance: auto !important;
 }
+#dealer-checklist-container input[type="checkbox"] {
+  transform: scale(2.5);
+  background-color: transparent;
+  }
 #dealer-checklist-container #back-to-dealers {
   top: 10px !important;
 }
+#dealer-checklist-container li label {
+  margin-left: 15px;
+  max-width: 90%;
+  }
 #dealer-checklist-container p {
   margin: 0;
   bottom: 0;
