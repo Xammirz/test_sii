@@ -150,6 +150,11 @@
 .dealer-checklist.show {
   display: block;
 }
+@media (max-width: 768px) {
+  #dealer-checklist-container input[type="checkbox"] {
+    transform: scale(2);
+  }
+}
 
 .add-item-button {
   margin-top: 10px;
