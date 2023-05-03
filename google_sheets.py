@@ -15,8 +15,9 @@ data = {}
 for row in sheet.get_all_records():
     city_name = row['name']
     dealers = []
-    for dealer_name, dealer_address, dealer_checklist, dealer_last_modified in zip(row['dealers'], row['address'], row['checklist'], row['last_modified']):
+    for dealer_id, dealer_name, dealer_address, dealer_checklist, dealer_last_modified in zip(row['id'], row['name'], row['address'], row['checklist'], row['last_modified']):
         dealer = {
+            'id': dealer_id,
             'name': dealer_name,
             'address': dealer_address,
             'checklist': dealer_checklist,
