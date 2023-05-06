@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "diknusbot",
+  "private_key_id": "5591a4ab4e932668aa1d8240c21218c6d998ade2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCLOcSUmrpNfqc/\nnz2RMrFwup5rtmKmi+Fj8k8RfPz9PS7JfYr8eOLggm08NoZCHE66eunPlQQjgq3j\nq/RVU4mpvu1/xSANOso2ko3+dyrFXXlY/7TIzgdrvtnOqrnB7+p5v2ydrWkBgY04\nVtFKS4DpKE65wSCEKt2m5CotiwRHugkUg3Ti+Ez6sqfcNvUfc6dODPeMQwLPr6yD\nAscVqvoUgQvKPJbAoYSlGuOD2dI3GnUHc6LCQi7IJuxzqQtJeY0U3vPU6iorZLJJ\nzjLgotYfc8JIyhrLFvR1ArLfcvIJ9PaXVNtHQottfK+4lIIIQEnaUjf1TD/6n1Pr\nbm458Up5AgMBAAECggEADU3PXZ3teJNGOxul3/aWox2KHuPWSHDscEcKzDKD4FUU\n3/cprVeF4otEEfFp4e5fjY1KQ2ZLd3M4150qY27wpDJU8pUtK2Z3RUC65dqQUTzN\n6DXDGj8p0V9y479HseMRpmGm6OhVtOmiy4PsSuutHVqXL0PnrgmElbqO1zxGA+58\ncuP9O5qPZp6YBAT3qN8DuMddSDcUbRROEt5u5NKi6sHf/svdgLIVqzybgxGUbZ51\ndSyh9WjPJfTUSdpyhG4q5mR0z71V1qFMcYiu+ZMpQQeyqdM4lFYpWnGn/J49lypl\nji6wTahK34BmKcWB7ZJtji9a5Azg9e+baI6BAonGqQKBgQC/pESOaXUs0JYrlm6x\nYdVReolEOFGskdcyqU1VSnISXDa2zuvF3NG6GwXXSBMAWk0Lt7rqxgLdtTiwNlSS\nZc4podzpwhilXf/P7Ae6QbQFBrVqTfT9vEzCcHiUUfcFRNyzQ/LAI72ukw3a6/Or\nXe8njVaabuGQHqMNZ9fr6rvzdQKBgQC5+za9cxUUywIdCsZ1ahOhryuQhE6tNBtt\npCM2WK4iV/giy/GJeR2rdXKmF44FA3UXPi5cYB9TvZkjIgN/ahcMWw8nJn7MZuge\n7yyLNbom9B5b14S1vFQcXk7Jk3akn6acyNY93wDN5nXgQjpeeuI0poKH54MSA/tn\nJgqpbZwudQKBgQCZkaQSTvXD3L6J3TmE0XYkncIDtfHVDOVaxoqe71Ir3lNF+Ni8\nrLAvp1nt4ua/IJ2e5zNU0SoYyhDMPC1XR1eGyxuBArXHRmUpE+Y5Xk9Iu9CCiEfr\nUIpeQcyOZoRBZ6ZHzQpo5/snOtYeeXfA+jwcAMnGZVZBrBtTMcS4W1kTxQKBgC+s\n1jt6ZM0PvVr0iCtRJfcskF5bjE+aK+3PRbeIxBrJsjI5VZGIGrL5SIqLPzzJxhpP\nNlM30NAGqlr3PS5MY9wm+5ttotODDb3gUerduvqBWcbxWHO981HSWyARTTimNG+8\njC8QG4Ssr0rtr0jI93PHu25bSp4zpx6qAdGs53yBAoGBAJKYmH6D9JsNIm/c3vWT\nmpqCFKzNleOoYZuQWkGDOT8gfmIKsbAVNM7/Fv54ShhZCYPrsmdJoGZP4XBqiY/G\n2xoxekTBodafH2dAPECDCrfN9jAVD3c3CAMMfSljvhot4V6WnSMpqwTZmNs8iKgv\napCVGZsUv7QeGkj2lYACo6MM\n-----END PRIVATE KEY-----\n",
+  "client_email": "diknus@diknusbot.iam.gserviceaccount.com",
+  "client_id": "100502517580525619505",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/diknus%40diknusbot.iam.gserviceaccount.com"
+}
