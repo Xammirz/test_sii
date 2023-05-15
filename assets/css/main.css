@@ -471,3 +471,23 @@ a:hover {
     padding: 0 1em;
   }
 }
+
+.city-name {
+  margin-top: 50px; /* добавляем отступ сверху */
+  margin-bottom: 50px;
+
+  display: block;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  color: #050504;
+  position: absolute; /* добавляем абсолютное позиционирование */
+  top: 0;
+  left: 0;
+  width: 100%; /* растягиваем блок на всю ширину родительского контейнера */
+  padding: 10px 0; /* добавляем небольшой отступ сверху и снизу */
+  background-color: rgba(201, 203, 199, 0.8); /* прозрачный фон */
+  border: 2px solid #fff; /* белая обводка */
+  border-radius: 5px;
+  z-index: 1; /* устанавливаем z-index, чтобы блок с названием города был над списком дилеров */
+}

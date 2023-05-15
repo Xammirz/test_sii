@@ -30,6 +30,7 @@ cityIcons.forEach(icon => {
     const cityDealers = data.dealers[cityId];
 
 	const sortedDealers = sortingDealers(cityDealers);
+  const cityName = data.cities.find(city => city.id === selectedSity).name;
 
     const dealersHtml = sortedDealers.map((dealer) => `
       <div class="dealer" data-id=${dealer.id} data-date=${dealer.last_modified}>
@@ -39,11 +40,13 @@ cityIcons.forEach(icon => {
       </div>
     `).join('');
 
-
     // Вставляем HTML-код в нужное место на странице
     const dealersListContainer = document.getElementById('dealers-list-container');
-	const dealersContainer = document.querySelector('.dealers_container');
-	dealersContainer.innerHTML = `${dealersHtml}`;
+    const dealersContainer = document.querySelector('.dealers_container');
+    dealersContainer.innerHTML = `
+      <div class="city-name">${cityName}</div>
+        ${dealersHtml}
+    `;
 
     // Скрываем блок выбора города
     citySelection.style.display = 'none';
