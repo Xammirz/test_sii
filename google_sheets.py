@@ -68,7 +68,7 @@ def main():
 
     # Сохранение данных в файле JSON.
     current_datetime = datetime.datetime.now()
-    filename = 'data/data.json'
+    filename = 'static/data/data.json'
     file_path = os.path.join(os.getcwd(), filename)
     with open(file_path, 'w') as f:
         json.dump(data, f, ensure_ascii=False, indent=4)

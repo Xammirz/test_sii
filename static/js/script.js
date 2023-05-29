@@ -1,5 +1,5 @@
 // Загрузка данных из JSON-файла
-fetch('data/data.json')
+fetch('/static/data/data.json')
   .then(response => response.json())
   .then(data => {
     // Формируем HTML-код для списка городов
@@ -80,8 +80,8 @@ fetch('data/data.json')
           const checklistHtml = currentDealer.checklist.map((item, id) => {
             return `
               <li>
-                <input type="checkbox" id="${id}">
-                <label for="${id}">${item}</label>
+                <input type="checkbox" id="checkbox-${id}" data-dealer-id="${dealerId}" data-item-id="${id}">
+                <label for="checkbox-${id}">${item}</label>
               </li>
             `;
           }).join('');
@@ -109,41 +109,51 @@ fetch('data/data.json')
     
           const checklistItems = dealerChecklistContainer.querySelectorAll('input[type="checkbox"]');
           checklistItems.forEach(item => {
+            const dealerId = Number(item.getAttribute('data-dealer-id'));
+            const itemId = Number(item.getAttribute('data-item-id'));
+            
+            // Восстановление состояния галочек из localStorage при загрузке страницы
+            const isChecked = localStorage.getItem(`dealer-${dealerId}-item-${itemId}`) === 'true';
+            item.checked = isChecked;
+    
             item.addEventListener('change', () => {
               if (item.checked) {
-                saveChecklistValue(dealerId, item.id);
-          }
+                saveChecklistValue(dealerId, itemId);
+                localStorage.setItem(`dealer-${dealerId}-item-${itemId}`, 'true'); // Сохранение состояния галочки в localStorage
+              } else {
+                localStorage.removeItem(`dealer-${dealerId}-item-${itemId}`); // Удаление состояния галочки из localStorage
+              }
+            });
+          });
         });
       });
-    });
-  });
-}
-
-function saveChecklistValue(dealerId, itemId) {
-  const data = {
-    dealerId: dealerId,
-    itemId: itemId
-  };
-
-  fetch('/save_checklist', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify(data)
-  })
-    .then(response => {
-      if (response.ok) {
-        console.log('Checklist value saved successfully');
-        completedTasks.push(Number(itemId));
-      } else {
-        console.error('Failed to save checklist value');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-    });
-}
+    }
+    
+    function saveChecklistValue(dealerId, itemId) {
+      const data = {
+        dealerId: dealerId,
+        itemId: itemId
+      };
+    
+      fetch('http://127.0.0.1:8000/save_checklist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Checklist value saved successfully');
+            completedTasks.push(itemId);
+          } else {
+            console.error('Failed to save checklist value');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
+        });
+    }    
 
 
 function checkingDealers() {

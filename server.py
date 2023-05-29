@@ -1,10 +1,14 @@
-import http.server
 import sqlite3
-import json
 from datetime import datetime
+from fastapi import FastAPI, Body
+from fastapi.staticfiles import StaticFiles
+from fastapi.responses import HTMLResponse
+from fastapi.middleware.cors import CORSMiddleware
 
-# Подключение к базе данных
-conn = sqlite3.connect('checklist.db')
+import os
+
+# Подключение к базе данных SQLite
+conn = sqlite3.connect('checklist.db', check_same_thread=False)
 
 # Создание таблицы (если она ещё не создана)
 conn.execute('CREATE TABLE IF NOT EXISTS completed_tasks (date TEXT, dealer_id INTEGER, task_id INTEGER)')
@@ -21,50 +25,54 @@ def save_completed_task(dealer_id, task_id):
     # Сохранение изменений в базе данных
     conn.commit()
 
-# Функция для получения выполненных задач за текущий день
-def get_completed_tasks():
-    # Получение текущей даты и времени
-    now = datetime.now()
-    date_string = now.strftime('%Y-%m-%d')
+# Создание экземпляра FastAPI
+app = FastAPI()
 
-    # Выполнение запроса к базе данных
-    cursor = conn.execute('SELECT task_id FROM completed_tasks WHERE date LIKE ?', (date_string + '%',))
-    tasks = [row[0] for row in cursor.fetchall()]
+# Настройки CORS
+origins = [
+    "http://localhost",
+    "http://localhost:8000",
+]
 
-    return tasks
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=origins,
+    allow_credentials=True,
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 
-# Класс обработчика запросов
-class RequestHandler(http.server.BaseHTTPRequestHandler):
-    def _set_headers(self, status_code=200):
-        self.send_response(status_code)
-        self.send_header('Content-type', 'application/json')
-        self.end_headers()
+# Get the absolute path of the current directory
+current_dir = os.path.dirname(os.path.abspath(__file__))
 
-    def do_POST(self):
-        # Проверка пути запроса
-        if self.path == '/save_checklist':
-            # Получение данных из тела запроса
-            content_length = int(self.headers['Content-Length'])
-            post_data = self.rfile.read(content_length)
-            checklist_values = json.loads(post_data.decode('utf-8'))
+# Define the path to the static directory
+static_dir = os.path.join(current_dir, "static")
 
-            # Сохранение значений чеклиста в базе данных
-            for value in checklist_values:
-                save_completed_task(value['dealerId'], value['itemId'])
+# Mount the static routes
+app.mount("/static", StaticFiles(directory=os.path.join(static_dir)), name="static")
 
-            # Отправка ответа
-            self._set_headers()
-            self.wfile.write(json.dumps({'status': 'success'}).encode('utf-8'))
-        else:
-            self._set_headers(status_code=404)
-            self.wfile.write(json.dumps({'status': 'error', 'message': 'Not found'}).encode('utf-8'))
 
-# Запуск сервера
-def run(server_class=http.server.HTTPServer, handler_class=RequestHandler):
-    server_address = ('', 8000)
-    httpd = server_class(server_address, handler_class)
-    print('Starting server...')
-    httpd.serve_forever()
+# Route for serving the index.html file
+@app.get("/", response_class=HTMLResponse)
+async def get_client_page():
+    index_path = ("index.html")
+    with open(index_path) as f:
+        return f.read()
 
-if __name__ == '__main__':
-    run()
+# Маршрут для сохранения значения чеклиста
+@app.post("/save_checklist")
+async def save_checklist(data: dict = Body(...)):
+    dealer_id = data.get('dealerId')
+    item_id = data.get('itemId')
+
+    if dealer_id is None or item_id is None:
+        return {"status": "error", "message": "Missing required parameters"}
+
+    save_completed_task(dealer_id, item_id)
+
+    return {"status": "success"}
+
+# Запуск сервера FastAPI
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
