@@ -25,6 +25,15 @@ def save_completed_task(dealer_id, task_id):
     # Сохранение изменений в базе данных
     conn.commit()
 
+# Функция для удаления выполненной задачи из базы данных
+def remove_completed_task(dealer_id, task_id):
+    # Удаление записи из таблицы
+    conn.execute('DELETE FROM completed_tasks WHERE dealer_id = ? AND task_id = ?', (dealer_id, task_id))
+
+    # Сохранение изменений в базе данных
+    conn.commit()
+
+
 # Создание экземпляра FastAPI
 app = FastAPI()
 
@@ -71,6 +80,20 @@ async def save_checklist(data: dict = Body(...)):
     save_completed_task(dealer_id, item_id)
 
     return {"status": "success"}
+
+# Маршрут для удаления значения чеклиста
+@app.post("/remove_checklist")
+async def remove_checklist(data: dict = Body(...)):
+    dealer_id = data.get('dealerId')
+    item_id = data.get('itemId')
+
+    if dealer_id is None or item_id is None:
+        return {"status": "error", "message": "Missing required parameters"}
+
+    remove_completed_task(dealer_id, item_id)
+
+    return {"status": "success"}
+
 
 # Запуск сервера FastAPI
 if __name__ == "__main__":

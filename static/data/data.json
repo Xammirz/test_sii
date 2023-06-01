@@ -1,22 +1,22 @@
 {
     "cities": [
         {
-            "id": "city_1",
+            "id": "city_2",
             "name": "Грозный"
         },
         {
-            "id": "city_2",
+            "id": "city_3",
             "name": "Ингушетия"
         },
         {
-            "id": "city_3",
+            "id": "city_4",
             "name": "Чечня"
         }
     ],
     "dealers": {
-        "city_1": [
+        "city_2": [
             {
-                "id": 0,
+                "id": "city_2_0",
                 "name": "Караван сарай",
                 "address": "адрес",
                 "checklist": [
@@ -27,10 +27,10 @@
                     "пятое",
                     "и посмотрим что с 6"
                 ],
-                "last_modified": "здесь пока вас не было"
+                "last_modified": "05.05.1999"
             },
             {
-                "id": 1,
+                "id": "city_2_1",
                 "name": "Синий магазин",
                 "address": "адрес",
                 "checklist": [
@@ -40,10 +40,10 @@
                     "четвертое тоже",
                     "пятое"
                 ],
-                "last_modified": "здесь пока вас не было"
+                "last_modified": "05.02.2018"
             },
             {
-                "id": 2,
+                "id": "city_2_2",
                 "name": "Ша1бан",
                 "address": "адрес",
                 "checklist": [
@@ -55,7 +55,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 3,
+                "id": "city_2_3",
                 "name": "еще кто то",
                 "address": "адрес",
                 "checklist": [
@@ -69,9 +69,9 @@
                 "last_modified": "здесь пока вас не было"
             }
         ],
-        "city_2": [
+        "city_3": [
             {
-                "id": 0,
+                "id": "city_3_0",
                 "name": "Караван сарай",
                 "address": "адрес",
                 "checklist": [
@@ -85,7 +85,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 1,
+                "id": "city_3_1",
                 "name": "Синий магазин",
                 "address": "адрес",
                 "checklist": [
@@ -99,7 +99,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 2,
+                "id": "city_3_2",
                 "name": "Ша1бан",
                 "address": "адрес",
                 "checklist": [
@@ -113,7 +113,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 3,
+                "id": "city_3_3",
                 "name": "еще кто то",
                 "address": "адрес",
                 "checklist": [
@@ -127,7 +127,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 4,
+                "id": "city_3_4",
                 "name": "Караван сарай",
                 "address": "адрес",
                 "checklist": [
@@ -141,7 +141,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 5,
+                "id": "city_3_5",
                 "name": "Синий магазин",
                 "address": "адрес",
                 "checklist": [
@@ -155,7 +155,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 6,
+                "id": "city_3_6",
                 "name": "Ша1бан",
                 "address": "адрес",
                 "checklist": [
@@ -169,9 +169,9 @@
                 "last_modified": "здесь пока вас не было"
             }
         ],
-        "city_3": [
+        "city_4": [
             {
-                "id": 0,
+                "id": "city_4_0",
                 "name": "еще кто то",
                 "address": "адрес",
                 "checklist": [
@@ -185,7 +185,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 1,
+                "id": "city_4_1",
                 "name": "Караван сарай",
                 "address": "адрес",
                 "checklist": [
@@ -199,7 +199,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 2,
+                "id": "city_4_2",
                 "name": "Синий магазин",
                 "address": "адрес",
                 "checklist": [
@@ -213,7 +213,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 3,
+                "id": "city_4_3",
                 "name": "Ша1бан",
                 "address": "адрес",
                 "checklist": [
@@ -227,7 +227,7 @@
                 "last_modified": "здесь пока вас не было"
             },
             {
-                "id": 4,
+                "id": "city_4_4",
                 "name": "еще кто то",
                 "address": "адрес",
                 "checklist": [

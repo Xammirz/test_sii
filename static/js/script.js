@@ -1,5 +1,5 @@
 // Загрузка данных из JSON-файла
-fetch('/static/data/data.json')
+fetch('static/data/data.json')
   .then(response => response.json())
   .then(data => {
     // Формируем HTML-код для списка городов
@@ -68,67 +68,32 @@ fetch('/static/data/data.json')
       });
     });
 
+    // Функция для удаления состояния галочки из базы данных
+    function removeChecklistValue(dealerId, itemId) {
+      const data = {
+        dealerId: dealerId,
+        itemId: itemId
+      };
 
-    function renderChecklist() {
-      const dealerIcons = document.querySelectorAll('.dealer');
-      dealerIcons.forEach(icon => {
-        icon.addEventListener('click', () => {
-          const dealerId = Number(icon.getAttribute('data-id'));
-    
-          currentDealer = data.dealers[selectedSity].find(dealer => dealer.id === dealerId);
-    
-          const checklistHtml = currentDealer.checklist.map((item, id) => {
-            return `
-              <li>
-                <input type="checkbox" id="checkbox-${id}" data-dealer-id="${dealerId}" data-item-id="${id}">
-                <label for="checkbox-${id}">${item}</label>
-              </li>
-            `;
-          }).join('');
-    
-          const dealerChecklistContainer = document.getElementById('dealer-checklist-container');
-          dealerChecklistContainer.innerHTML = `
-            <h2>${currentDealer.name}</h2>
-            <p>${currentDealer.address}</p>
-            <ul>
-              ${checklistHtml}
-            </ul>
-            <button id="back-to-dealers">Назад</button>
-          `;
-    
-          const dealersListContainer = document.getElementById('dealers-list-container');
-          dealersListContainer.style.display = 'none';
-    
-          dealerChecklistContainer.style.display = 'block';
-    
-          const backToDealersBtn = document.getElementById('back-to-dealers');
-          backToDealersBtn.addEventListener('click', () => {
-            dealersListContainer.style.display = 'block';
-            dealerChecklistContainer.style.display = 'none';
-          });
-    
-          const checklistItems = dealerChecklistContainer.querySelectorAll('input[type="checkbox"]');
-          checklistItems.forEach(item => {
-            const dealerId = Number(item.getAttribute('data-dealer-id'));
-            const itemId = Number(item.getAttribute('data-item-id'));
-            
-            // Восстановление состояния галочек из localStorage при загрузке страницы
-            const isChecked = localStorage.getItem(`dealer-${dealerId}-item-${itemId}`) === 'true';
-            item.checked = isChecked;
-    
-            item.addEventListener('change', () => {
-              if (item.checked) {
-                saveChecklistValue(dealerId, itemId);
-                localStorage.setItem(`dealer-${dealerId}-item-${itemId}`, 'true'); // Сохранение состояния галочки в localStorage
-              } else {
-                localStorage.removeItem(`dealer-${dealerId}-item-${itemId}`); // Удаление состояния галочки из localStorage
-              }
-            });
-          });
+      fetch('http://127.0.0.1:8000/remove_checklist', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+      })
+        .then(response => {
+          if (response.ok) {
+            console.log('Checklist value removed successfully from the database');
+          } else {
+            console.error('Failed to remove checklist value from the database');
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error);
         });
-      });
     }
-    
+
     function saveChecklistValue(dealerId, itemId) {
       const data = {
         dealerId: dealerId,
@@ -153,7 +118,92 @@ fetch('/static/data/data.json')
         .catch(error => {
           console.error('Error:', error);
         });
-    }    
+    }
+    let completedTasks = []; // Объявление переменной completedTasks
+
+    function renderChecklist() {
+      const dealerIcons = document.querySelectorAll('.dealer');
+      dealerIcons.forEach(icon => {
+        icon.addEventListener('click', () => {
+          const dealerId = icon.dataset.id;
+          
+          currentDealer = data.dealers[selectedSity].find(dealer => dealer.id === dealerId);
+          
+          const checklistHtml = currentDealer.checklist.map((item, id) => {
+            return `
+              <li>
+                <input type="checkbox" id="checkbox-${id}" data-dealer-id="${dealerId}" data-item-id="${id}">
+                <label for="checkbox-${id}">${item}</label>
+              </li>
+            `;
+          }).join('')
+    
+          const dealerChecklistContainer = document.getElementById('dealer-checklist-container');
+          dealerChecklistContainer.innerHTML = `
+            <h2>${currentDealer.name}</h2>
+            <p>${currentDealer.address}</p>
+            <ul>
+              ${checklistHtml}
+            </ul>
+            <button id="back-to-dealers">Назад</button>
+          `;
+    
+          const dealersListContainer = document.getElementById('dealers-list-container');
+          dealersListContainer.style.display = 'none';
+    
+          dealerChecklistContainer.style.display = 'block';
+    
+          const backToDealersBtn = document.getElementById('back-to-dealers');
+          backToDealersBtn.addEventListener('click', () => {
+            dealersListContainer.style.display = 'block';
+            dealerChecklistContainer.style.display = 'none';
+          });
+    
+          const checklistItems = dealerChecklistContainer.querySelectorAll('input[type="checkbox"]');
+          checklistItems.forEach(item => {
+            const dealerId = item.getAttribute('data-dealer-id');
+            const itemId =item.getAttribute('data-item-id');
+            
+            // Восстановление состояния галочек из localStorage при загрузке страницы
+            const isChecked = localStorage.getItem(`dealer-${dealerId}-item-${itemId}`) === 'true';
+            item.checked = isChecked;
+
+            item.addEventListener('change', () => {
+              if (item.checked) {
+                saveChecklistValue(dealerId, itemId);
+                localStorage.setItem(`dealer-${dealerId}-item-${itemId}`, 'true'); // Сохранение состояния галочки в localStorage
+              } else {
+                localStorage.removeItem(`dealer-${dealerId}-item-${itemId}`); // Удаление состояния галочки из localStorage
+              }
+            });
+          });
+          
+          // Проверяем и удаляем все состояния галочек, которые были установлены за день
+          removeCheckboxStatesAtMidnight();
+        });
+      });
+    }
+    
+    // Функция для удаления всех галочек из localStorage
+    function removeCheckboxStatesAtMidnight() {
+      const now = new Date();
+      const currentHour = now.getUTCHours() + 3; // Московское время (+3 часа от UTC)
+      const currentMinute = now.getUTCMinutes();
+    
+      // Проверяем, если текущее время равно 12:00 AM (00:00) по московскому времени
+      if (currentHour === 0 && currentMinute === 0) {
+        // Перебираем все ключи в localStorage
+        for (let i = 0; i < localStorage.length; i++) {
+          const key = localStorage.key(i);
+    
+          // Проверяем, является ли ключ состоянием галочки
+          if (key.includes('-item-')) {
+            localStorage.removeItem(key); // Удаляем состояние галочки из localStorage
+          }
+        }
+      }
+    }
+    
 
 
 function checkingDealers() {

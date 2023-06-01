@@ -8,7 +8,7 @@ from googleapiclient.discovery import build
 from oauth2client.service_account import ServiceAccountCredentials
 
 # Ключ службы в JSON-формате.
-KEY_FILE_LOCATION = 'data/key_file.json'
+KEY_FILE_LOCATION = 'static/data/key_file.json'
 
 # Идентификатор электронной таблицы Google.
 SPREADSHEET_ID = '1GfxxSBTwR5jGV49oyyfkur_m_2hwF8YV1GooZLqU31Q'
@@ -50,13 +50,15 @@ def main():
         # Проверяем, есть ли уже город в списке городов.
         city = next((c for c in data["cities"] if c["name"] == city_name), None)
         if city is None:
+            city_id += 1
             city = {"id": f"city_{city_id}", "name": city_name}
             data["cities"].append(city)
             data["dealers"][city["id"]] = []
-            city_id += 1
+
+        # Генерируем уникальный идентификатор дилера.
+        dealer_id = f"{city['id']}_{len(data['dealers'][city['id']])}"
 
         # Добавляем дилера в список дилеров города.
-        dealer_id = len(data["dealers"][city["id"]])
         dealer = {
             "id": dealer_id,
             "name": dealer_name,
@@ -66,12 +68,11 @@ def main():
         }
         data["dealers"][city["id"]].append(dealer)
 
-    # Сохранение данных в файле JSON.
-    current_datetime = datetime.datetime.now()
-    filename = 'static/data/data.json'
-    file_path = os.path.join(os.getcwd(), filename)
-    with open(file_path, 'w') as f:
-        json.dump(data, f, ensure_ascii=False, indent=4)
+        # Сохранение данных в файле JSON.
+        filename = 'static/data/data.json'
+        file_path = os.path.join(os.getcwd(), filename)
+        with open(file_path, 'w') as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
 
 
 if __name__ == '__main__':
