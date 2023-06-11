@@ -6,7 +6,7 @@ from aiogram.dispatcher import FSMContext
 from aiogram.dispatcher.filters import Command
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from dotenv import load_dotenv
-from google_sheets import main
+from google_sheets import main, save_data_to_json
 
 load_dotenv()
 
@@ -16,9 +16,10 @@ ALLOWED_CHAT_IDS = os.getenv("ALLOWED_CHAT_IDS")
 URL = 'https://xamerzaev.github.io/DikNus/'
 START_TEXT = 'Добро пожаловать!'
 START_BUTTON = 'Приступить'
-DATA_DOWNLOAD_BUTTON = 'Запустить загрузку данных'
+DATA_DOWNLOAD_BUTTON = 'Запустить загрузку данных из Google Sheets'
 LOADING_STARTED_TEXT = 'Начата загрузка данных...'
 LOADING_COMPLETED_TEXT = 'Загрузка данных завершена.'
+GENERATE_CHART_BUTTON = 'Сгенерировать график работы сотрудника в PDF'
 
 if not TELEGRAM_BOT_TOKEN or not ALLOWED_CHAT_IDS:
     raise ValueError("Please provide TELEGRAM_BOT_TOKEN and ALLOWED_CHAT_IDS in the .env file.")
@@ -38,10 +39,11 @@ async def start(message: types.Message):
 
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True, one_time_keyboard=True)
     markup.add(types.KeyboardButton(START_BUTTON, web_app=WebAppInfo(url=URL)))
-    
+
     if str(message.chat.id) == allowed_chats[0]:
         markup.add(types.KeyboardButton(DATA_DOWNLOAD_BUTTON))
-    
+        markup.add(types.KeyboardButton(GENERATE_CHART_BUTTON))
+
     await message.answer(START_TEXT, reply_markup=markup)
 
 
@@ -59,6 +61,14 @@ async def execute_main_message(message: types.Message, state: FSMContext):
     await message.answer(LOADING_STARTED_TEXT)
     threading.Thread(target=main).start()
     await message.answer(LOADING_COMPLETED_TEXT)
+    await state.finish()
+
+
+@dp.message_handler(lambda message: message.text == GENERATE_CHART_BUTTON, state='*')
+async def generate_chart_message(message: types.Message, state: FSMContext):
+    pass
+    # generate_chart_and_save_pdf()
+    await message.answer("График работы сотрудника сгенерирован и отправлен вам в PDF-файле.")
     await state.finish()
 
 

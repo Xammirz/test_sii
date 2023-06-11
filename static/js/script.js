@@ -119,6 +119,7 @@ fetch('static/data/data.json')
           console.error('Error:', error);
         });
     }
+
     let completedTasks = []; // Объявление переменной completedTasks
 
     function renderChecklist() {
@@ -173,6 +174,7 @@ fetch('static/data/data.json')
                 saveChecklistValue(dealerId, itemId);
                 localStorage.setItem(`dealer-${dealerId}-item-${itemId}`, 'true'); // Сохранение состояния галочки в localStorage
               } else {
+                removeChecklistValue(dealerId, itemId);
                 localStorage.removeItem(`dealer-${dealerId}-item-${itemId}`); // Удаление состояния галочки из localStorage
               }
             });

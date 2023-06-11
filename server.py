@@ -7,11 +7,17 @@ from fastapi.middleware.cors import CORSMiddleware
 
 import os
 
-# Подключение к базе данных SQLite
-conn = sqlite3.connect('checklist.db', check_same_thread=False)
+# Подключение к базе данных SQLite (checklist.db)
+checklist_conn = sqlite3.connect('checklist.db', check_same_thread=False)
 
-# Создание таблицы (если она ещё не создана)
-conn.execute('CREATE TABLE IF NOT EXISTS completed_tasks (date TEXT, dealer_id INTEGER, task_id INTEGER)')
+# Подключение к базе данных SQLite (data.db)
+data_conn = sqlite3.connect('static/data/data.db', check_same_thread=False)
+
+# Создание таблицы (если она ещё не создана) в checklist.db
+checklist_conn.execute('CREATE TABLE IF NOT EXISTS completed_tasks (date TEXT, dealer_id INTEGER, task_id INTEGER)')
+
+# Создание таблицы (если она ещё не создана) в data.db
+data_conn.execute('CREATE TABLE IF NOT EXISTS dealers (id TEXT, last_modified TEXT)')
 
 # Функция для сохранения выполненной задачи в базе данных
 def save_completed_task(dealer_id, task_id):
@@ -19,19 +25,31 @@ def save_completed_task(dealer_id, task_id):
     now = datetime.now()
     date_string = now.strftime('%Y-%m-%d %H:%M:%S')
 
-    # Вставка данных в таблицу
-    conn.execute('INSERT INTO completed_tasks (date, dealer_id, task_id) VALUES (?, ?, ?)', (date_string, dealer_id, task_id))
+    # Вставка данных в таблицу (checklist.db)
+    checklist_conn.execute('INSERT INTO completed_tasks (date, dealer_id, task_id) VALUES (?, ?, ?)', (date_string, dealer_id, task_id))
 
-    # Сохранение изменений в базе данных
-    conn.commit()
+    # Сохранение изменений в базе данных (checklist.db)
+    checklist_conn.commit()
+
+    # Обновление значения поля last_modified в таблице dealers (data.db)
+    data_conn.execute('UPDATE dealers SET last_modified = ? WHERE id = ?', (now.strftime('%Y-%m-%d %H:%M:%S'), dealer_id))
+
+    # Сохранение изменений в базе данных (data.db)
+    data_conn.commit()
 
 # Функция для удаления выполненной задачи из базы данных
 def remove_completed_task(dealer_id, task_id):
-    # Удаление записи из таблицы
-    conn.execute('DELETE FROM completed_tasks WHERE dealer_id = ? AND task_id = ?', (dealer_id, task_id))
+    # Удаление записи из таблицы (checklist.db)
+    checklist_conn.execute('DELETE FROM completed_tasks WHERE dealer_id = ? AND task_id = ?', (dealer_id, task_id))
 
-    # Сохранение изменений в базе данных
-    conn.commit()
+    # Сохранение изменений в базе данных (checklist.db)
+    checklist_conn.commit()
+
+    # Обновление значения поля last_modified в таблице dealers (data.db)
+    data_conn.execute('UPDATE dealers SET last_modified = NULL WHERE id = ?', (dealer_id,))
+
+    # Сохранение изменений в базе данных (data.db)
+    data_conn.commit()
 
 
 # Создание экземпляра FastAPI
@@ -98,4 +116,4 @@ async def remove_checklist(data: dict = Body(...)):
 # Запуск сервера FastAPI
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+    uvicorn.run(app, host="localhost", port=8000)
