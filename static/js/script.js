@@ -141,8 +141,9 @@ fetch('static/data/data.json')
     
           const dealerChecklistContainer = document.getElementById('dealer-checklist-container');
           dealerChecklistContainer.innerHTML = `
-            <h2>${currentDealer.name}</h2>
-            <p>${currentDealer.address}</p>
+          <br> 
+          <h1 style="color: black">${currentDealer.name}</h1>
+          <p>${currentDealer.address}</p>
             <ul>
               ${checklistHtml}
             </ul>

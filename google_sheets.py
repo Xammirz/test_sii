@@ -75,6 +75,45 @@ def insert_data(connection, data):
     connection.commit()
 
 
+def retrieve_data_from_database(connection):
+    cursor = connection.cursor()
+
+    # Извлечение данных городов.
+    cursor.execute('SELECT * FROM cities')
+    cities = cursor.fetchall()
+
+    # Извлечение данных дилеров.
+    cursor.execute('SELECT * FROM dealers')
+    dealers = cursor.fetchall()
+
+    # Формирование словаря с данными.
+    data = {
+        "cities": [],
+        "dealers": {}
+    }
+
+    # Заполнение данных городов.
+    for city in cities:
+        city_id, city_name = city
+        data["cities"].append({"id": f"city_{city_id}", "name": city_name})
+
+    # Заполнение данных дилеров.
+    for dealer in dealers:
+        dealer_id, city_id, name, address, checklist, last_modified = dealer
+        dealer_data = {
+            "id": dealer_id,
+            "name": name,
+            "address": address,
+            "checklist": checklist.split(','),
+            "last_modified": last_modified
+        }
+        if city_id not in data["dealers"]:
+            data["dealers"][city_id] = []
+        data["dealers"][city_id].append(dealer_data)
+
+    return data
+
+
 def save_data_as_json(data):
     json_data = {
         "cities": data["cities"],
@@ -141,6 +180,11 @@ def main():
     connection = sqlite3.connect(DATABASE_PATH)
     create_tables_if_not_exists(connection)
     insert_data(connection, data)
+    connection.close()
+
+    # Извлечение данных из базы данных.
+    connection = sqlite3.connect(DATABASE_PATH)
+    data = retrieve_data_from_database(connection)
     connection.close()
 
     # Сохранение данных в JSON-файле.

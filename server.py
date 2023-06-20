@@ -23,7 +23,7 @@ data_conn.execute('CREATE TABLE IF NOT EXISTS dealers (id TEXT, last_modified TE
 def save_completed_task(dealer_id, task_id):
     # Получение текущей даты и времени
     now = datetime.now()
-    date_string = now.strftime('%Y-%m-%d %H:%M:%S')
+    date_string = now.strftime('%Y-%m-%d')
 
     # Вставка данных в таблицу (checklist.db)
     checklist_conn.execute('INSERT INTO completed_tasks (date, dealer_id, task_id) VALUES (?, ?, ?)', (date_string, dealer_id, task_id))
@@ -32,7 +32,7 @@ def save_completed_task(dealer_id, task_id):
     checklist_conn.commit()
 
     # Обновление значения поля last_modified в таблице dealers (data.db)
-    data_conn.execute('UPDATE dealers SET last_modified = ? WHERE id = ?', (now.strftime('%Y-%m-%d %H:%M:%S'), dealer_id))
+    data_conn.execute('UPDATE dealers SET last_modified = ? WHERE id = ?', (now.strftime('%Y-%m-%d'), dealer_id))
 
     # Сохранение изменений в базе данных (data.db)
     data_conn.commit()
