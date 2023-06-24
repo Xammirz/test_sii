@@ -1,9 +1,10 @@
 import sqlite3
 from datetime import datetime
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Request
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import HTMLResponse
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.templating import Jinja2Templates
 
 import os
 
@@ -78,14 +79,11 @@ static_dir = os.path.join(current_dir, "static")
 # Mount the static routes
 app.mount("/static", StaticFiles(directory=os.path.join(static_dir)), name="static")
 
-
+templates = Jinja2Templates(directory="templates")
 # Route for serving the index.html file
 @app.get("/", response_class=HTMLResponse)
-async def get_client_page():
-    index_path = ("index.html")
-    with open(index_path) as f:
-        return f.read()
-
+async def get_index(request: Request):
+    return templates.TemplateResponse("index.html", {"request": request})
 # Маршрут для сохранения значения чеклиста
 @app.post("/save_checklist")
 async def save_checklist(data: dict = Body(...)):
@@ -116,4 +114,4 @@ async def remove_checklist(data: dict = Body(...)):
 # Запуск сервера FastAPI
 if __name__ == "__main__":
     import uvicorn
-    uvicorn.run(app, host="localhost", port=8000)
+    uvicorn.run(app,host="127.0.0.1", port=8000)
